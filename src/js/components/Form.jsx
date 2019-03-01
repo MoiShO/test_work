@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addArticle } from "../actions/index";
 import Alert from "./Alert.jsx"
+import { withTranslation  } from "react-i18next";
+import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -58,7 +60,7 @@ class ConnectedForm extends Component {
           />
         </div>
         <button type="submit" className="btn btn-success btn-sl">
-          CREATE
+         {i18next.t('btn-create')}
         </button>
       </form>
     );
@@ -66,4 +68,4 @@ class ConnectedForm extends Component {
 }
 
 const Form = connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
-export default Form;
+export default withTranslation()(Form);

@@ -48,3 +48,13 @@ export function items(state = [], action) {
             return state;
     }
 }
+
+export function changeLanguage(state = 'en', action) {
+    switch (action.type) {
+        case 'CHANGE_LANG':
+            return action.lang.language;
+
+        default:
+            return state;
+    }
+}

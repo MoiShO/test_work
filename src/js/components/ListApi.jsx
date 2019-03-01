@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { articleFetchData } from '../actions/index';
 import Button from './delButton.jsx'
 
+
 class ItemList extends Component {
     componentDidMount() {
         this.props.fetchData();
     }
 
     render() {
+        console.log(this.props)
         if (this.props.hasErrored) {
             return <p>Sorry! There was an error loading the items</p>;
         }

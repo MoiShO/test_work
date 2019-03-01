@@ -1,3 +1,4 @@
+
 import {
     ARTICLE_HAS_ERRORED,
     ARTICLE_FETCH_DATA_SUCCESS,
@@ -5,6 +6,7 @@ import {
     DEL_ARTICLE,
     ARTICLE_IS_LOADING,
     UPDATE_ARTICLE,
+    CHANGE_LANG,
 } from "../constants/action-types.js";
 
 let load = false
@@ -31,6 +33,10 @@ export function delArticlePost(items) {
 
 export function updateArticlePost(items) {
     return { type: UPDATE_ARTICLE, items }
+};
+
+export function changeLanguage(lang) {
+    return { type: CHANGE_LANG, lang }
 };
 
 export function articleFetchData() {

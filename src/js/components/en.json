@@ -1,0 +1,9 @@
+{
+    "en": {
+      "translation": {
+        "test_message": "This is a test message",
+        "btn-create": "CREATE",
+        "title-main": "Add a new article"
+      }
+    }
+  }
