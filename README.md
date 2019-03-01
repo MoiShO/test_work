@@ -18,7 +18,7 @@
 
 # Сборка production билда
 
-## Wizard
+## test_work
 
 >Необходимо находиться в test_work
 
