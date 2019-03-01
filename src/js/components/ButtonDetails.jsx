@@ -11,7 +11,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = state => {
-  return { redirect: state.redirect , articles: state.articles };
+  return { items: state.items };
 };
 
 class ButtonDetails extends Component {
@@ -42,11 +42,11 @@ class ButtonDetails extends Component {
   render() {
     let showForm = this.state.showForm
     const id = this.props.match.params.id
-    const title = this.props.articles[id].title
+    const note = this.props.items.filter((el) => {if(el.id == id){return el}})[0]
     return (
-        <div col-sm>
-          <button class="btn btn-success btn-lg" onClick={this.handleDel.bind(this, title ,id)}>Del</button>
-          <button class="btn btn-success btn-lg" onClick={this.handleChange.bind(this)}>Change</button>
+        <div col-sm-12>
+          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, note.title ,id)}>Del</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>Change</button>
           {showForm ? 
           <ChangeForm 
           updateData={this.updateData}

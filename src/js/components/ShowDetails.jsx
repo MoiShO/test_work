@@ -5,14 +5,17 @@ import { withRouter } from 'react-router-dom';
 import ButtonDetails from './ButtonDetails.jsx'
 
 function mapDispatchToProps(dispatch) {
-    return {
-      delArticle: article => dispatch(delArticle(article)),
-    };
-  }
-
-const mapStateToProps = state => {
-    return { articles: state.articles };
+  return {
+    delArticle: article => dispatch(delArticle(article)),
   };
+}
+
+const mapStateToProps = (state) => {
+    return {
+        items: state.items,
+    };
+};
+
 
 class ConnectedDetails extends Component {
 
@@ -22,12 +25,11 @@ class ConnectedDetails extends Component {
       }
 
     render() {
-        let { id , articles} = this.props
-        let bookmarks = articles[id]
-        console.log(bookmarks)
+        let { id, items } = this.props
+        let note = items.filter((el) => {if(el.id == id){return el}})[0]
         return (
             <div>
-                <h1> {bookmarks.title}</h1>
+                <h1>{note.title}</h1>
                 <ButtonDetails />
             </div>
         )

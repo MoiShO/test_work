@@ -27,8 +27,8 @@ class ConnectedChangeForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { title } = this.state;
     const { id } = this.props
+    const { title } = this.state;
     if(title) {
         this.props.changeArticle({ title, id });
         this.props.updateData(this.state.name)
@@ -40,7 +40,6 @@ class ConnectedChangeForm extends Component {
 
   render() {
     const { title } = this.state;
-    console.log(this.state.message)
     return (
       <form onSubmit={this.handleSubmit}>
         <Alert message={this.state.message}/>

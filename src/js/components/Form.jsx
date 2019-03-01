@@ -5,12 +5,12 @@ import Alert from "./Alert.jsx"
 
 function mapDispatchToProps(dispatch) {
   return {
-    addArticle: article => dispatch(addArticle(article))
+    addArticle: items => dispatch(addArticle(items))
   };
 }
 
 const mapStateToProps = state => {
-  return { articles: state.articles };
+  return { items: state.items };
 };
 
 class ConnectedForm extends Component {
@@ -32,9 +32,8 @@ class ConnectedForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const { title } = this.state;
-    const id = this.props.articles.length;
     if(title){
-      this.props.addArticle({ title, id });
+      this.props.addArticle({title});
       this.setState({ title: "" });
       this.setState({ message: "" })
     }

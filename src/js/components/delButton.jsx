@@ -10,18 +10,14 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const mapStateToProps = state => {
-  return { redirect: state.redirect , articles: state.articles };
-};
-
 class DelButton extends Component {
 
   state = {
     showForm: false,
   }
 
-  handleDel(title , id) {
-    this.props.delArticle({ title, id });
+  handleDel(id) {
+    this.props.delArticle({ id });
   }
 
   routeChange(id) {
@@ -42,9 +38,9 @@ class DelButton extends Component {
     let showForm = this.state.showForm
     let {title, id} = this.props
     return (
-        <div className="col-sm">
-          <button className="btn btn-success btn-sm " onClick={this.handleDel.bind(this, title ,id)}>Del</button>
-          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id)}>Show details</button>
+        <div className="col-sm-12">
+          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, id)}>Del</button>
+          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id, title)}>Show details</button>
           <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>Change</button>
           {showForm ? 
             <ChangeForm 
@@ -57,6 +53,6 @@ class DelButton extends Component {
   }
 }
 
-const Button = connect(mapStateToProps, mapDispatchToProps)(DelButton);
+const Button = connect(null, mapDispatchToProps)(DelButton);
 
 export default withRouter(Button);
