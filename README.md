@@ -1,15 +1,9 @@
 # Установка зависемостей
 
->Необходимо находиться в packages/constructor
+>Необходимо находиться в test_work
 
 ```sh
-> yarn
-```
-
->Необходимо находиться в packages/iframe
-
-```sh
-> yarn
+> npm install
 ```
 
 # Запуск Dev окружения
