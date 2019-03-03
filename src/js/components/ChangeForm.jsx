@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { changeArticle } from "../actions/index";
 import Alert from "./Alert.jsx"
+import { withTranslation  } from "react-i18next";
+import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -44,7 +46,7 @@ class ConnectedChangeForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <Alert message={this.state.message}/>
         <div className="form-group">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">{i18next.t('title')}</label>
           <input
             type="text"
             className="form-control"
@@ -53,8 +55,8 @@ class ConnectedChangeForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-success btn-lg">
-          CHANGE
+        <button type="submit" className="btn btn-success btn-sm">
+            {i18next.t('btn-change')}
         </button>
       </form>
     );
@@ -62,4 +64,4 @@ class ConnectedChangeForm extends Component {
 }
 
 const ChangeForm = connect(null, mapDispatchToProps)(ConnectedChangeForm);
-export default ChangeForm;
+export default withTranslation()(ChangeForm);

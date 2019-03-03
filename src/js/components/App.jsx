@@ -10,7 +10,7 @@ import i18next from "i18next";
 const Home = () => (
     <div className="row col-sm">
     <div className="col-sm-5 offset-sm-1">
-      <h2>Articles</h2>
+      <h2>{i18next.t('notes')}</h2>
         <ItemList />
     </div>
     <div className="col-sm-5 offset-sm-1">
@@ -36,7 +36,7 @@ class ConnectApp extends Component {
       <BrowserRouter>
         <div>
           <Swich />
-          <Link to="/">Home</Link>{' '}
+          <Link to="/">{i18next.t('nav-home')}</Link>{' '}
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path={`/:id`} component={Details} />

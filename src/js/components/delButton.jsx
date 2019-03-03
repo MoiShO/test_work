@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { delArticle } from "../actions/index";
 import { withRouter } from 'react-router-dom';
 import ChangeForm from './ChangeForm.jsx'
+import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -39,9 +40,9 @@ class DelButton extends Component {
     let {title, id} = this.props
     return (
         <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, id)}>Del</button>
-          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id, title)}>Show details</button>
-          <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>Change</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, id)}>{i18next.t('btn-delete')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id, title)}>{i18next.t('btn-show-detail')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>{i18next.t('btn-change')}</button>
           {showForm ? 
             <ChangeForm 
             updateData={this.updateData}

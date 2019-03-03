@@ -1,9 +1,15 @@
 {
     "ru": {
       "translation": {
+        "title": "Заголовок",
+        "notes": "Заметки",
         "test_message": "Это тестовое сообщение",
+        "title-main": "Добавить новую статью",
         "btn-create": "СОЗДАТЬ",
-        "title-main": "Добавить новую статью"
+        "btn-change": "ИЗМЕНИТЬ",
+        "btn-show-detail": "ДЕТАЛИ",
+        "btn-delete": "УДАЛИТЬ",
+        "nav-home": "ГЛАВНАЯ"
       }
     }
   }

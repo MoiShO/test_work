@@ -1,9 +1,15 @@
 {
     "en": {
       "translation": {
+        "title": "Title",
+        "notes": "Notes",
         "test_message": "This is a test message",
+        "title-main": "Add a new article",
         "btn-create": "CREATE",
-        "title-main": "Add a new article"
+        "btn-change": "CHANGE",
+        "btn-show-detail": "SHOW DETAILS",
+        "btn-delete": "DELETE",
+        "nav-home": "HOME"
       }
     }
   }

@@ -50,7 +50,7 @@ class ConnectedForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <Alert message={this.state.message}/>
         <div className="form-group">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">{i18next.t('title')}</label>
           <input
             type="text"
             className="form-control"
