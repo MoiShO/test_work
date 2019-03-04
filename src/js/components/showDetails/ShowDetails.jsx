@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { delArticle } from "../../actions/index";
 import { withRouter } from 'react-router-dom';
-import ButtonDetails from '../buttonDetails/index.jsx'
+import ButtonDetails from '../buttonDetails/ButtonDeatails.jsx'
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -30,7 +30,10 @@ class ConnectedDetails extends Component {
         return (
             <div>
                 <h1>{note.title}</h1>
-                <ButtonDetails />
+                <ButtonDetails 
+                    id={id}
+                    title={note.title}
+                />
             </div>
         )
     }

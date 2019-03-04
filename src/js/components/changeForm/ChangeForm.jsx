@@ -1,27 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addArticle } from "../../actions/index";
-import Alert from "../alert/index.jsx"
+import { changeArticle } from "../../actions/index";
+import Alert from "../alert/Alert.jsx"
 import { withTranslation  } from "react-i18next";
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
-    addArticle: items => dispatch(addArticle(items))
+    changeArticle: article => dispatch(changeArticle(article))
   };
 }
 
-const mapStateToProps = state => {
-  return { items: state.items };
-};
-
-class ConnectedForm extends Component {
+class ConnectedChangeForm extends Component {
 
   constructor() {
-    super();
-    this.state = {
+      super();
+      this.state = {
       title: "",
-      message: "",
+      message: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,15 +28,15 @@ class ConnectedForm extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
+    const { id } = this.props
     const { title } = this.state;
-    if(title){
-      this.props.addArticle({title});
-      this.setState({ title: "" });
-      this.setState({ message: "" })
+    if(title) {
+        this.props.changeArticle({ title, id });
+        this.props.updateData(this.state.name)
     }
     else {
-      this.setState({ message: "Fill in the title" })
+        this.setState({ message: true })
     }
   }
 
@@ -48,7 +44,10 @@ class ConnectedForm extends Component {
     const { title } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <Alert message={this.state.message}/>
+        { this.state.message ? 
+          <Alert message={i18next.t('alert')}/> 
+          : null
+        }
         <div className="form-group">
           <label htmlFor="title">{i18next.t('title')}</label>
           <input
@@ -59,13 +58,13 @@ class ConnectedForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-success btn-sl">
-         {i18next.t('btn-create')}
+        <button type="submit" className="btn btn-success btn-sm">
+            {i18next.t('btn-change')}
         </button>
       </form>
     );
   }
 }
 
-const Form = connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
-export default withTranslation()(Form);
+const ChangeForm = connect(null, mapDispatchToProps)(ConnectedChangeForm);
+export default withTranslation()(ChangeForm);

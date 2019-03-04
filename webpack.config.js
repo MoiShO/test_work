@@ -18,7 +18,11 @@ module.exports = {
             loader: "html-loader"
           }
         ]
-      }
+      },
+      {
+        test: /\.css$/,
+        use: "css-loader",
+      },
     ]
   },
   devServer: {
@@ -31,10 +35,3 @@ module.exports = {
     })
   ]
 };
-
-module.exports = {
-  entry: './dist/main.js',
-  output: {
-    path: __dirname + '/dist'
-  }
-}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { delArticle } from "../../actions/index";
 import { withRouter } from 'react-router-dom';
-import ChangeForm from '../changeForm/index.jsx'
+import ChangeForm from '../changeForm/ChangeForm.jsx'
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
@@ -13,17 +13,27 @@ function mapDispatchToProps(dispatch) {
 
 class DelButton extends Component {
 
+  constructor (props){
+    super(props);
+
+    this.handleDel = this.handleDel.bind(this)
+    this.routeChange = this.routeChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
   state = {
     showForm: false,
   }
 
-  handleDel(id) {
+  handleDel() {
+    const { id } = this.props
     this.props.delArticle({ id });
   }
 
-  routeChange(id) {
+  routeChange() {
+    const { id } = this.props
     let path = `${id}`;
-    this.props.history.push(path);
+    return this.props.history.push(path);
   }
 
   handleChange() {
@@ -36,15 +46,13 @@ class DelButton extends Component {
   }
   
   render() {
-    let showForm = this.state.showForm
-    let {title, id} = this.props
     return (
         <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, id)}>{i18next.t('btn-delete')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id, title)}>{i18next.t('btn-show-detail')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>{i18next.t('btn-change')}</button>
-          {showForm ? 
-            <ChangeForm 
+          <button className="btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.routeChange}>{i18next.t('btn-show-detail')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
+          {this.state.showForm ? 
+          <ChangeForm 
             updateData={this.updateData}
             id = {this.props.id}
             /> : null

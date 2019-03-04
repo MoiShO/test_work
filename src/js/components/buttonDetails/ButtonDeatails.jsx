@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { delArticle } from "../../actions/index";
 import { withRouter } from 'react-router-dom';
-import ChangeForm from '../changeForm/index.jsx'
+import ChangeForm from '../changeForm/ChangeForm.jsx'
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
@@ -21,9 +21,18 @@ class ButtonDetails extends Component {
     showForm: false,
   }
 
-  handleDel(title , id) {
+  constructor(props){
+    super(props);
+    this.handleDel = this.handleDel.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+
+  }
+
+  handleDel() {
+    const id = this.props.id
+    const note = this.props.items.filter((el) => el.id == id )[0].title
     this.routeChange()
-    this.props.delArticle({ title, id });
+    this.props.delArticle({ note, id });
   }
 
   routeChange() {
@@ -42,16 +51,14 @@ class ButtonDetails extends Component {
   
   render() {
     let showForm = this.state.showForm
-    const id = this.props.match.params.id
-    const note = this.props.items.filter((el) => {if(el.id == id){return el}})[0]
     return (
         <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, note.title ,id)}>{i18next.t('btn-delete')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>{i18next.t('btn-change')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
           {showForm ? 
           <ChangeForm 
-          updateData={this.updateData}
-          id = {id}
+            updateData={this.updateData}
+            id = {this.id}
           /> : null
           }
         </div>

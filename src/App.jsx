@@ -1,11 +1,17 @@
-import React, { Component } from "react";
-import Form from "./js/components/form/index.jsx";
-import ShowDetails from "./js/components/showDetails/index.jsx"
-import ItemList from "./js/components/list/index.jsx"
+import React from "react";
+import Form from "./js/components/form/Form.jsx";
+import ShowDetails from "./js/components/showDetails/ShowDetails.jsx"
+import ItemList from "./js/components/list/List.jsx"
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import Swich from "./js/components/switchingLanguage/index.jsx"
+import Swich from "./js/components/switchingLanguage/Switchlanguage.jsx"
 import { withTranslation  } from "react-i18next";
 import i18next from "i18next";
+
+if (process.env.NODE_ENV !== 'production') {
+  const {whyDidYouUpdate} = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 
 const Home = () => (
     <div className="row col-sm">
@@ -29,14 +35,13 @@ const Details = (props) => {
   );
 }
 
-class ConnectApp extends Component {
+const App = () => {
 
-  render() {
-    return (
+    return(
       <BrowserRouter>
         <div>
           <Swich />
-          <Link to="/">{i18next.t('nav-home')}</Link>{' '}
+          <Link to="/">{i18next.t('nav-home') !== 'nav-home' ? i18next.t('nav-home') : "HOME"}</Link>{' '}
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path={`/:id`} component={Details} />
@@ -45,9 +50,7 @@ class ConnectApp extends Component {
         </div>
       </BrowserRouter>
     );
-  }
 }
 
-// const App = connect(null, mapDispatchToProps)(ConnectApp);
 
-export default withTranslation()(ConnectApp);
+export default withTranslation()(App);

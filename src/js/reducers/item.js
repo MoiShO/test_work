@@ -34,7 +34,6 @@ export function items(state = [], action) {
             })
 
         case 'UPDATE_ARTICLE':
-        console.log(action)
             return state.filter((el) => {
                 if(el.id == action.items.id){
                     el.title = action.items.title
@@ -52,8 +51,7 @@ export function items(state = [], action) {
 export function changeLanguage(state = 'en', action) {
     switch (action.type) {
         case 'CHANGE_LANG':
-            return action.lang.language;
-
+            return action.lang
         default:
             return state;
     }

@@ -1,23 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeArticle } from "../../actions/index";
-import Alert from "../alert/index.jsx"
-import { withTranslation  } from "react-i18next";
+import { addArticle } from "../../actions/index";
+import Alert from "../alert/index"
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeArticle: article => dispatch(changeArticle(article))
+    addArticle: items => dispatch(addArticle(items))
   };
 }
 
-class ConnectedChangeForm extends Component {
+class ConnectedForm extends Component {
 
   constructor() {
-      super();
-      this.state = {
+    super();
+    this.state = {
       title: "",
-      message: "",
+      message: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,14 +28,14 @@ class ConnectedChangeForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { id } = this.props
     const { title } = this.state;
-    if(title) {
-        this.props.changeArticle({ title, id });
-        this.props.updateData(this.state.name)
+    if(title){
+      this.props.addArticle({title});
+      this.setState({ title: "" });
+      this.setState({ message: false })
     }
     else {
-        this.setState({ message: "Fill in the title" })
+      this.setState({ message: true })
     }
   }
 
@@ -44,7 +43,10 @@ class ConnectedChangeForm extends Component {
     const { title } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <Alert message={this.state.message}/>
+        { this.state.message ? 
+          <Alert message={i18next.t('alert')}/> 
+          : null
+        }
         <div className="form-group">
           <label htmlFor="title">{i18next.t('title')}</label>
           <input
@@ -55,13 +57,13 @@ class ConnectedChangeForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-success btn-sm">
-            {i18next.t('btn-change')}
+        <button type="submit" className="btn btn-success btn-sl">
+         {i18next.t('btn-create')}
         </button>
       </form>
     );
   }
 }
 
-const ChangeForm = connect(null, mapDispatchToProps)(ConnectedChangeForm);
-export default withTranslation()(ChangeForm);
+const Form = connect(null, mapDispatchToProps)(ConnectedForm);
+export default Form;

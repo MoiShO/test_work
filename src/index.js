@@ -5,6 +5,12 @@ import configureStore from "./js/store/index";
 import App from "./App.jsx";
 import "./js/components/languages/i18n"
 
+
+if (process.env.NODE_ENV !== 'production') {
+  const {whyDidYouUpdate} = require('why-did-you-update');
+  whyDidYouUpdate(React);
+}
+
 const store = configureStore()
 
 render(

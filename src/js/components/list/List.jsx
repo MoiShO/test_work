@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { articleFetchData } from '../../actions/index';
-import Button from '../delButton/index.jsx'
+import Button from '../delButton/DelButton.jsx'
 
 
 class ItemList extends Component {
@@ -10,7 +10,6 @@ class ItemList extends Component {
     }
 
     render() {
-        console.log(this.props)
         if (this.props.hasErrored) {
             return <p>Sorry! There was an error loading the items</p>;
         }
@@ -27,7 +26,6 @@ class ItemList extends Component {
                         <Button
                         title={item.title}
                         id={item.id}>
-                        Del
                         </Button>
                     </li>
                 ))}

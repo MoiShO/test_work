@@ -9,7 +9,8 @@
         "btn-change": "CHANGE",
         "btn-show-detail": "SHOW DETAILS",
         "btn-delete": "DELETE",
-        "nav-home": "HOME"
+        "nav-home": "HOME",
+        "alert": "Fill in the title"
       }
     }
   }
