@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
     return {
         items: state.items,
         hasErrored: state.arcticleHasErrored,
-        isLoading: state.arcticleIsLoading
+        isLoading: state.arcticleIsLoading,
+        hasDeleted: state.arcticleIsDeleted,
     };
 };
 

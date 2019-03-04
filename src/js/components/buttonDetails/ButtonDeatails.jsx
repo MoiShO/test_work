@@ -10,15 +10,15 @@ class ButtonDetails extends Component {
 
   constructor(props){
     super(props);
-    this.handleDel = this.handleDel.bind(this)
+    this.handleDel = this.handleDel.bind(this);
     this.handleChange = this.handleChange.bind(this)
 
   }
 
   handleDel() {
-    const id = this.props.id
-    const note = this.props.items.filter((el) => el.id == id )[0].title
-    this.routeChange()
+    const id = this.props.id;
+    const note = this.props.items.filter((el) => el.id == id )[0].title;
+    this.routeChange();
     this.props.delArticle({ note, id });
   }
 
@@ -28,7 +28,7 @@ class ButtonDetails extends Component {
   }
 
   handleChange() {
-    const showForm = this.state.showForm
+    const showForm = this.state.showForm;
     this.setState({ showForm: !showForm })
   }
 
@@ -37,11 +37,11 @@ class ButtonDetails extends Component {
   }
   
   render() {
-    let showForm = this.state.showForm
+    let showForm = this.state.showForm;
     return (
-        <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
+        <div className="detail col-sm-12">
+          <button className="detail btn_delete btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
+          <button className="detail btn_change btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
           {showForm ? 
           <ChangeForm 
             updateData={this.updateData}

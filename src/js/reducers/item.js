@@ -13,6 +13,9 @@ export function arcticleIsLoading(state = false, action) {
         case 'ARTICLE_IS_LOADING':
             return action.isLoading;
 
+        case 'ARTICLE_IS_DELETED':
+            return action.isDeleted;
+
         default:
             return state;
     }
@@ -27,16 +30,12 @@ export function items(state = [], action) {
             return state.concat(action.items)
 
         case 'DEL_ARTICLE':
-            return state.filter((el) => {
-                if(el.id != action.items.id){
-                    return el
-                }
-            })
+            return state.filter((el) => el.id != action.items.id );
 
         case 'UPDATE_ARTICLE':
             return state.filter((el) => {
                 if(el.id == action.items.id){
-                    el.title = action.items.title
+                    el.title = action.items.title;
                     return el
                 } else {
                     return el
@@ -51,7 +50,17 @@ export function items(state = [], action) {
 export function changeLanguage(state = 'en', action) {
     switch (action.type) {
         case 'CHANGE_LANG':
-            return action.lang
+            return action.lang;
+        default:
+            return state;
+    }
+}
+
+export function arcticleIsDeleted(state = false, action) {
+    switch (action.type) {
+        case 'ARTICLE_IS_DELETED':
+            return action.isDeleted;
+
         default:
             return state;
     }

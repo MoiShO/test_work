@@ -1,0 +1,11 @@
+.note.btn_all_change{
+    margin-bottom: 15px;
+    margin-left: -10px;
+}
+
+.note.btn_delete, .note.btn_show_detail, .note.btn_change{
+    outline: none;
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    margin: 5px 5px 5px 5px;
+}

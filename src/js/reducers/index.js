@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
-import { bindActionCreators } from 'redux'
-import { items, arcticleHasErrored, arcticleIsLoading, changeLanguage } from './item.js';
+import { items, arcticleHasErrored, arcticleIsLoading, changeLanguage, arcticleIsDeleted } from './item.js';
 
 
 
@@ -9,4 +8,5 @@ export default combineReducers({
     arcticleHasErrored,
     arcticleIsLoading,
     changeLanguage,
+    arcticleIsDeleted,
 });

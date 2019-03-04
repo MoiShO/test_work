@@ -3,6 +3,7 @@
     margin-right: 12px;
     margin-top: 12px;
     font-size: 12px;
+    margin-bottom: 30px;
 }
 .btn_active.btn_switch.ru, .btn_active.btn_switch.en{
     display: inline;

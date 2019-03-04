@@ -58,7 +58,7 @@ class ConnectSwich extends Component {
       <div className="header switch col-sm-3 offset-sm-6">
           <button className={defaultClassNameEN} onClick={this.handleSwitchEn}>{i18next.t('english')}</button>
           <button className={defaultClassNameRU} onClick={this.handleSwitchRu}>{i18next.t('russian')}</button>
-      </div>
+     </div>
     )
   }
 }

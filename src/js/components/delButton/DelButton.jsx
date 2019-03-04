@@ -18,18 +18,18 @@ class DelButton extends Component {
   }
 
   handleDel() {
-    const { id } = this.props
+    const { id } = this.props;
     this.props.delArticle({ id });
   }
 
   routeChange() {
-    const { id } = this.props
+    const { id } = this.props;
     let path = `${id}`;
     return this.props.history.push(path);
   }
 
   handleChange() {
-    const showForm = this.state.showForm
+    const showForm = this.state.showForm;
     this.setState({ showForm: !showForm })
   }
 
@@ -38,11 +38,13 @@ class DelButton extends Component {
   }
   
   render() {
+    console.log(this.props.hasDeleted)
+    const{ del } = this.props.hasDeleted
     return (
-        <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.routeChange}>{i18next.t('btn-show-detail')}</button>
-          <button className="btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
+        <div className="note btn_all_change col-sm-12">
+          <button className="note btn_delete btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
+          <button className="note btn_show_detail btn btn-success btn-sm" onClick={this.routeChange}>{i18next.t('btn-show-detail')}</button>
+          <button className="note btn_change btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
           {this.state.showForm ? 
           <ChangeForm 
             updateData={this.updateData}
