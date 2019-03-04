@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { articleFetchData } from '../actions/index';
-import Button from './delButton.jsx'
+import { articleFetchData } from '../../actions/index';
+import Button from '../delButton/index.jsx'
 
 
 class ItemList extends Component {

@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeArticle } from "../actions/index";
-import Alert from "./Alert.jsx"
+import { addArticle } from "../../actions/index";
+import Alert from "../alert/index.jsx"
 import { withTranslation  } from "react-i18next";
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeArticle: article => dispatch(changeArticle(article))
+    addArticle: items => dispatch(addArticle(items))
   };
 }
 
-class ConnectedChangeForm extends Component {
+const mapStateToProps = state => {
+  return { items: state.items };
+};
+
+class ConnectedForm extends Component {
 
   constructor() {
-      super();
-      this.state = {
+    super();
+    this.state = {
       title: "",
       message: "",
     };
@@ -29,14 +33,14 @@ class ConnectedChangeForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { id } = this.props
     const { title } = this.state;
-    if(title) {
-        this.props.changeArticle({ title, id });
-        this.props.updateData(this.state.name)
+    if(title){
+      this.props.addArticle({title});
+      this.setState({ title: "" });
+      this.setState({ message: "" })
     }
     else {
-        this.setState({ message: "Fill in the title" })
+      this.setState({ message: "Fill in the title" })
     }
   }
 
@@ -55,13 +59,13 @@ class ConnectedChangeForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-success btn-sm">
-            {i18next.t('btn-change')}
+        <button type="submit" className="btn btn-success btn-sl">
+         {i18next.t('btn-create')}
         </button>
       </form>
     );
   }
 }
 
-const ChangeForm = connect(null, mapDispatchToProps)(ConnectedChangeForm);
-export default withTranslation()(ChangeForm);
+const Form = connect(mapStateToProps, mapDispatchToProps)(ConnectedForm);
+export default withTranslation()(Form);

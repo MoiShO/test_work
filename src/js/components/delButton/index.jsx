@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { delArticle } from "../actions/index";
+import { delArticle } from "../../actions/index";
 import { withRouter } from 'react-router-dom';
-import ChangeForm from './ChangeForm.jsx'
+import ChangeForm from '../changeForm/index.jsx'
 import i18next from "i18next";
 
 function mapDispatchToProps(dispatch) {
@@ -11,23 +11,18 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const mapStateToProps = state => {
-  return { items: state.items };
-};
-
-class ButtonDetails extends Component {
+class DelButton extends Component {
 
   state = {
     showForm: false,
   }
 
-  handleDel(title , id) {
-    this.routeChange()
-    this.props.delArticle({ title, id });
+  handleDel(id) {
+    this.props.delArticle({ id });
   }
 
-  routeChange() {
-    let path = '/';
+  routeChange(id) {
+    let path = `${id}`;
     this.props.history.push(path);
   }
 
@@ -42,23 +37,23 @@ class ButtonDetails extends Component {
   
   render() {
     let showForm = this.state.showForm
-    const id = this.props.match.params.id
-    const note = this.props.items.filter((el) => {if(el.id == id){return el}})[0]
+    let {title, id} = this.props
     return (
         <div className="col-sm-12">
-          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, note.title ,id)}>{i18next.t('btn-delete')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.handleDel.bind(this, id)}>{i18next.t('btn-delete')}</button>
+          <button className="btn btn-success btn-sm" onClick={this.routeChange.bind(this, id, title)}>{i18next.t('btn-show-detail')}</button>
           <button className="btn btn-success btn-sm" onClick={this.handleChange.bind(this)}>{i18next.t('btn-change')}</button>
           {showForm ? 
-          <ChangeForm 
-          updateData={this.updateData}
-          id = {id}
-          /> : null
+            <ChangeForm 
+            updateData={this.updateData}
+            id = {this.props.id}
+            /> : null
           }
         </div>
     );
   }
 }
 
-const Button = connect(mapStateToProps, mapDispatchToProps)(ButtonDetails);
+const Button = connect(null, mapDispatchToProps)(DelButton);
 
 export default withRouter(Button);

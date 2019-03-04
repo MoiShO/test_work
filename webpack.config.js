@@ -1,4 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { join, resolve } = require('path')
+
 module.exports = {
   module: {
     rules: [
@@ -24,8 +26,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./src/index.html",
+      template: resolve(__dirname, 'src', 'index.html'),
       filename: "./index.html"
     })
   ]
 };
+
+module.exports = {
+  entry: './dist/main.js',
+  output: {
+    path: __dirname + '/dist'
+  }
+}

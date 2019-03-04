@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { delArticle } from "../actions/index";
+import { delArticle } from "../../actions/index";
 import { withRouter } from 'react-router-dom';
-import ButtonDetails from './ButtonDetails.jsx'
+import ButtonDetails from '../buttonDetails/index.jsx'
 
 function mapDispatchToProps(dispatch) {
   return {

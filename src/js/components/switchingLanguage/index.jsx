@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import i18next from "i18next";
-import { changeLanguage } from "../actions/index";
+import { changeLanguage } from "../../actions/index";
 import { connect } from "react-redux";
 import { withTranslation  } from "react-i18next";
 
@@ -22,9 +22,10 @@ class ConnectSwich extends Component {
     }
   
     setLanguage(language) {
+      let languich = require(`./${language}.json`)
       i18next.init({
         lng: language,
-        resources: require(`./${language}.json`)
+        resources: languich
       });
       this.props.changeLanguage(i18next);
     }
@@ -36,7 +37,6 @@ class ConnectSwich extends Component {
             <button  onClick={this.setLanguage.bind(this, 'en')}>English</button>
             <button  onClick={this.setLanguage.bind(this, 'ru')}>Русский</button>
           </div>
-          <p>{i18next.t('test_message')}</p>
         </div>
       )
     }

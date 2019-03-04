@@ -1,38 +1,53 @@
-import React from "react";
-// import ReactDOM from "react-dom";
-import Input from "./js/components/presentational/Input.jsx";
-import Main from "./js/components/details/index.jsx"
+import React, { Component } from "react";
+import Form from "./js/components/form/index.jsx";
+import ShowDetails from "./js/components/showDetails/index.jsx"
+import ItemList from "./js/components/list/index.jsx"
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-// import index from "./js/index"
+import Swich from "./js/components/switchingLanguage/index.jsx"
+import { withTranslation  } from "react-i18next";
+import i18next from "i18next";
 
-const Home = () => <h1>Home</h1>;
-const Details = () => <h1>Details</h1>;
+const Home = () => (
+    <div className="row col-sm">
+    <div className="col-sm-5 offset-sm-1">
+      <h2>{i18next.t('notes')}</h2>
+        <ItemList />
+    </div>
+    <div className="col-sm-5 offset-sm-1">
+      <h2>{i18next.t('title-main')}</h2>
+      <Form />
+    </div>
+  </div>
+)
 
-class App extends React.Component {
 
-  state = {
-      id: '',
-  }  
+const Details = (props) => {
+  return (
+      <ShowDetails
+      id={props.match.params.id} 
+      />
+  );
+}
 
-  changeId = (event) => {
-      this.setState({ id: event.target.value }) 
-  }
+class ConnectApp extends Component {
 
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Link to="/">Home</Link>{' '}
-          <Link to={{pathname: '/details'}}>Details</Link>{' '}
+          <Swich />
+          <Link to="/">{i18next.t('nav-home')}</Link>{' '}
             <Switch>
-              <Route exact path="/" component={index} />
-              <Route exact path="/details" component={Details} />
+              <Route exact path="/" component={Home} />
+              <Route path={`/:id`} component={Details} />
               <Route exact render={() => <h1>Page not found</h1>} />
             </Switch>
         </div>
-      </BrowserRouter>  
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+// const App = connect(null, mapDispatchToProps)(ConnectApp);
+
+export default withTranslation()(ConnectApp);
