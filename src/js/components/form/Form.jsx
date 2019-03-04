@@ -1,14 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { addArticle } from "../../actions/index";
 import Alert from "../alert/index"
 import i18next from "i18next";
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addArticle: items => dispatch(addArticle(items))
-  };
-}
 
 class ConnectedForm extends Component {
 
@@ -42,12 +34,12 @@ class ConnectedForm extends Component {
   render() {
     const { title } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form className="form" onSubmit={this.handleSubmit}>
         { this.state.message ? 
           <Alert message={i18next.t('alert')}/> 
           : null
         }
-        <div className="form-group">
+        <div className="form form_input form-group">
           <label htmlFor="title">{i18next.t('title')}</label>
           <input
             type="text"
@@ -57,7 +49,7 @@ class ConnectedForm extends Component {
             onChange={this.handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-success btn-sl">
+        <button type="submit" className="form btn_create btn btn-success btn-sl">
          {i18next.t('btn-create')}
         </button>
       </form>
@@ -65,5 +57,4 @@ class ConnectedForm extends Component {
   }
 }
 
-const Form = connect(null, mapDispatchToProps)(ConnectedForm);
-export default Form;
+export default ConnectedForm;

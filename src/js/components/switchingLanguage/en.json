@@ -10,7 +10,9 @@
         "btn-show-detail": "SHOW DETAILS",
         "btn-delete": "DELETE",
         "nav-home": "HOME",
-        "alert": "Fill in the title"
+        "alert": "Fill in the title",
+        "english": "en",
+        "russian": "ru"
       }
     }
   }

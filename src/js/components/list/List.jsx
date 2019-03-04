@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { articleFetchData } from '../../actions/index';
-import Button from '../delButton/DelButton.jsx'
+
+import Button from '../delButton/index'
 
 
 class ItemList extends Component {
@@ -19,10 +18,13 @@ class ItemList extends Component {
         }
 
         return (
-            <ul>
+            <ul className="notes_list">
                 {this.props.items.map((item) => (
-                    <li key={item.id}>
+                    <li key={item.id} className="notes_list note">
                         {item.title}
+
+                        <hr className="notes_list separator" />
+
                         <Button
                         title={item.title}
                         id={item.id}>
@@ -34,20 +36,6 @@ class ItemList extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        items: state.items,
-        hasErrored: state.arcticleHasErrored,
-        isLoading: state.arcticleIsLoading
-    };
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetchData: (url) => dispatch(articleFetchData(url))
-    };
-};
 
-const List = connect(mapStateToProps, mapDispatchToProps)(ItemList);
-
-export default List;
+export default ItemList;

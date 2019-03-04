@@ -17,6 +17,12 @@ class ConnectSwich extends Component {
     this.handleSwitchRu = this.handleSwitchRu.bind(this)
   }
 
+  state={
+    active: "btn_active",
+    defaultClassNameEN: "header btn_switch btn_active en",
+    defaultClassNameRU: "header btn_switch ru",
+  }
+
   componentWillMount() {
    this.setLanguage();
   }
@@ -34,21 +40,24 @@ class ConnectSwich extends Component {
 
   handleSwitchEn = () => {
     this.props.changeLanguage('en')
-    this.setLanguage('en') 
+    this.setLanguage('en')
+    this.setState( { defaultClassNameRU: `header btn_switch ru` } )
+    this.setState( { defaultClassNameEN: `header btn_switch  ${this.state.active} en` } )
   }
 
   handleSwitchRu = () => {
     this.props.changeLanguage('ru')
-    this.setLanguage('ru') 
+    this.setLanguage('ru')
+    this.setState( { defaultClassNameRU: `header btn_switch ${this.state.active} ru` } )
+    this.setState( { defaultClassNameEN: `header btn_switch en` } )
   }
   
   render() {
+    const {defaultClassNameEN, defaultClassNameRU} = this.state
     return (
-      <div>
-        <div>
-          <button onClick={this.handleSwitchEn}>English</button>
-          <button onClick={this.handleSwitchRu}>Русский</button>
-        </div>
+      <div className="header switch col-sm-3 offset-sm-6">
+          <button className={defaultClassNameEN} onClick={this.handleSwitchEn}>{i18next.t('english')}</button>
+          <button className={defaultClassNameRU} onClick={this.handleSwitchRu}>{i18next.t('russian')}</button>
       </div>
     )
   }

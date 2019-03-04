@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { delArticle } from "../../actions/index";
-import { withRouter } from 'react-router-dom';
-import ChangeForm from '../changeForm/ChangeForm.jsx'
+import ChangeForm from '../changeForm/index'
 import i18next from "i18next";
 
-function mapDispatchToProps(dispatch) {
-  return {
-    delArticle: article => dispatch(delArticle(article)),
-  };
-}
 
 class DelButton extends Component {
 
@@ -62,6 +54,5 @@ class DelButton extends Component {
   }
 }
 
-const Button = connect(null, mapDispatchToProps)(DelButton);
 
-export default withRouter(Button);
+export default DelButton;

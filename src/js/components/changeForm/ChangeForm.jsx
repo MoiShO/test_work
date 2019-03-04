@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { changeArticle } from "../../actions/index";
 import Alert from "../alert/Alert.jsx"
-import { withTranslation  } from "react-i18next";
 import i18next from "i18next";
 
-function mapDispatchToProps(dispatch) {
-  return {
-    changeArticle: article => dispatch(changeArticle(article))
-  };
-}
 
 class ConnectedChangeForm extends Component {
 
@@ -31,6 +23,7 @@ class ConnectedChangeForm extends Component {
     event.preventDefault()
     const { id } = this.props
     const { title } = this.state;
+    console.log(this.props)
     if(title) {
         this.props.changeArticle({ title, id });
         this.props.updateData(this.state.name)
@@ -66,5 +59,4 @@ class ConnectedChangeForm extends Component {
   }
 }
 
-const ChangeForm = connect(null, mapDispatchToProps)(ConnectedChangeForm);
-export default withTranslation()(ChangeForm);
+export default ConnectedChangeForm;

@@ -1,21 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { delArticle } from "../../actions/index";
-import { withRouter } from 'react-router-dom';
-import ButtonDetails from '../buttonDetails/ButtonDeatails.jsx'
-
-function mapDispatchToProps(dispatch) {
-  return {
-    delArticle: article => dispatch(delArticle(article)),
-  };
-}
-
-const mapStateToProps = (state) => {
-    return {
-        items: state.items,
-    };
-};
-
+import ButtonDetails from '../buttonDetails/index'
 
 class ConnectedDetails extends Component {
 
@@ -39,5 +23,4 @@ class ConnectedDetails extends Component {
     }
 }
 
-const Details = connect(mapStateToProps, mapDispatchToProps)(ConnectedDetails);
-export default withRouter(Details);
+export default ConnectedDetails;

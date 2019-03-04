@@ -1,26 +1,27 @@
 import React from "react";
-import Form from "./js/components/form/Form.jsx";
-import ShowDetails from "./js/components/showDetails/ShowDetails.jsx"
-import ItemList from "./js/components/list/List.jsx"
+import Form from "./js/components/form/index";
+import ShowDetails from "./js/components/showDetails/index"
+import ItemList from "./js/components/list/index"
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import Swich from "./js/components/switchingLanguage/Switchlanguage.jsx"
+import SwichLanguage from "./js/components/switchingLanguage/index"
 import { withTranslation  } from "react-i18next";
 import i18next from "i18next";
+import "./App.css"
 
-if (process.env.NODE_ENV !== 'production') {
-  const {whyDidYouUpdate} = require('why-did-you-update');
-  whyDidYouUpdate(React);
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   const {whyDidYouUpdate} = require('why-did-you-update');
+//   whyDidYouUpdate(React);
+// }
 
 
 const Home = () => (
     <div className="row col-sm">
-    <div className="col-sm-5 offset-sm-1">
-      <h2>{i18next.t('notes')}</h2>
+    <div className="home_page col-sm-5 offset-sm-1">
+      <p className="home_page article_list" >{i18next.t('notes')}</p>
         <ItemList />
     </div>
     <div className="col-sm-5 offset-sm-1">
-      <h2>{i18next.t('title-main')}</h2>
+      <p className="home_page article_add" >{i18next.t('title-main')}</p>
       <Form />
     </div>
   </div>
@@ -39,9 +40,9 @@ const App = () => {
 
     return(
       <BrowserRouter>
-        <div>
-          <Swich />
-          <Link to="/">{i18next.t('nav-home') !== 'nav-home' ? i18next.t('nav-home') : "HOME"}</Link>{' '}
+        <div className="row">
+        <Link className="col-sm-1 home offset-sm-1 link_homepage" to="/">{i18next.t('nav-home') !== 'nav-home' ? i18next.t('nav-home') : "HOME"}</Link>{' '}
+          <SwichLanguage />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path={`/:id`} component={Details} />

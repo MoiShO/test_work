@@ -1,4 +1,4 @@
 import Alert from "./Alert.jsx"
-import Style from "./AlertStyle.css"
+import "./alert-style.css"
 
 export default Alert
