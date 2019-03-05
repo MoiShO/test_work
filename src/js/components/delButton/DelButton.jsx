@@ -20,6 +20,7 @@ class DelButton extends Component {
   handleDel() {
     const { id } = this.props
     this.props.delArticle({ id });
+    this.props.updateClass({ addClass : 'removal', id: id })
   }
 
   routeChange() {
