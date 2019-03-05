@@ -1,15 +1,6 @@
 import { connect } from "react-redux";
-import { delArticle } from "../../actions/index";
-// import { withRouter } from 'react-router-dom';
 import ConnectedDetails from "./ShowDetails.jsx";
 import "./show-details-style.css";
-
-function mapDispatchToProps(dispatch) {
-    return {
-      delArticle: article => dispatch(delArticle(article)),
-    };
-}
-
   
 const mapStateToProps = (state) => {
     return {
@@ -17,8 +8,6 @@ const mapStateToProps = (state) => {
     };
 };
 
-
-const Details = connect(mapStateToProps, mapDispatchToProps)(ConnectedDetails);
+const Details = connect(mapStateToProps)(ConnectedDetails);
 
 export default Details
-// export default withRouter()(Details)

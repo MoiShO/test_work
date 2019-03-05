@@ -1,0 +1,12 @@
+.detail{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: -20px;
+}
+
+.detail.btn_delete, .detail.btn_change{
+    outline: none;
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    margin: 5px 5px 5px 5px;
+}

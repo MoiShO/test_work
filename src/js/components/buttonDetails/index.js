@@ -10,7 +10,10 @@ function mapDispatchToProps(dispatch) {
 }
   
 const mapStateToProps = state => {
-    return { items: state.items };
+    return {
+        items: state.items,
+        hasDeleted: state.arcticleIsDeleted,
+    };
 };
 
 const Button = connect(mapStateToProps, mapDispatchToProps)(ButtonDetails);

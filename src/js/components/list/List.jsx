@@ -1,64 +1,57 @@
 import React, { Component } from 'react';
-
 import Button from '../delButton/index'
-
+import Preloder from '../../../preloader/25.gif'
 
 class ItemList extends Component {
 
-    constructor(props){
-        super(props);
-        this.defaultClass = this.defaultClass.bind(this);
-    }
+  componentDidMount() {
+    this.props.fetchData();
+  }
 
-    componentDidMount() {
-        this.props.fetchData();
+  defaultClass(data) {
+    if(!data.id) {
+      return `notes_list note ${data}`
     }
+    else {
+      return `notes_list ${data.addClass} note ${data.id}`
+      }
+  }
 
-    defaultClass(data) {
-        console.log(data)
-        if(!data.id) {
-            return `notes_list note ${data}`
-        }
-        else {
-            console.log(data)
-            return `notes_list ${data.addClass} note ${data.id}`
-        }
-    }
-
-    updateClass(value) {
-        this.defaultClass(value)
-    }
+  updateClass(value) {
+    this.defaultClass(value)
+  }
 
     render() {
-        if (this.props.hasErrored) {
-            return <p>Sorry! There was an error loading the items</p>;
-        }
+      if (this.props.hasErrored) {
+        return <p>Sorry! There was an error loading the items</p>;
+      }
 
-        if (this.props.isLoading) {
-            return <p>Loading…</p>;
-        }
-        console.log(this.state)
-        return (
+      if (this.props.isLoading) {
+        return <img src={Preloder} alt="loading..." />;
+      }
+
+      return (
+        <div>
             <ul className="notes_list">
-                {this.props.items.map((item) => (
-                    <li key={item.id} 
-                        className={this.defaultClass(item.id)}>
-                        {item.title}
+              {this.props.items.map((item) => (
+                <li key={item.id}  className="notes_list note">
+                  {Number(item.id) === Number(this.props.isDeleted.id) ? <img src={Preloder} alt="loading..." /> :  item.title}
+        
+                  <hr className="notes_list separator" />
 
-                        <hr className="notes_list separator" />
-
-                        <Button
-                            updateClass={this.updateClass}
-                            title={item.title}
-                            id={item.id}>
-                        </Button>
-                    </li>
-                ))}
+                  {Number(item.id) === Number(this.props.isDeleted.id) ? 
+                    null :
+                    <Button
+                      title={item.title}
+                      id={item.id}>
+                    </Button>
+                  }
+                </li>
+              ))}
             </ul>
-        );
-    }
+        </div>
+      );
+  }
 }
-
-
 
 export default ItemList;

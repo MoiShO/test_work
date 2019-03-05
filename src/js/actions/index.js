@@ -1,4 +1,3 @@
-
 import {
     ARTICLE_HAS_ERRORED,
     ARTICLE_FETCH_DATA_SUCCESS,
@@ -7,6 +6,7 @@ import {
     ARTICLE_IS_LOADING,
     UPDATE_ARTICLE,
     CHANGE_LANG,
+    ARTICLE_IS_DELETED,
 } from "../constants/action-types.js";
 
 let load = false
@@ -25,24 +25,31 @@ export function arcticleFetchDataSuccess(items) {
 
 export function addArticlePost(items) {
     return { type: ADD_ARTICLE, items }
-};
+}
 
 export function delArticlePost(items) {
     return { type: DEL_ARTICLE, items }
-};
+}
 
 export function updateArticlePost(items) {
     return { type: UPDATE_ARTICLE, items }
-};
+}
 
 export function changeLanguage(lang) {
     return { type: CHANGE_LANG, lang }
-};
+}
+
+export function arcticleIsDeleted(items) {
+    console.log(items);
+    return { type: ARTICLE_IS_DELETED, isDeleted: items };
+}
 
 export function articleFetchData() {
         return (dispatch) => {
             if(load === false) {
-                load = true
+
+                load = true;
+
                 dispatch(arcticleIsLoading(true));
                 
                 const url = 'http://private-9aad-note10.apiary-mock.com/notes'
@@ -96,6 +103,9 @@ export function addArticle(data) {
 
 export function delArticle(data) {
     return (dispatch) => {
+        
+        let set = {delete:true, id: data.id}
+        dispatch(arcticleIsDeleted(set));
 
         const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`
 
@@ -107,6 +117,8 @@ export function delArticle(data) {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
+
+                dispatch(arcticleIsDeleted(false));
 
                 dispatch(arcticleHasErrored(false));
 
@@ -132,12 +144,12 @@ export function changeArticle(data) {
                     throw Error(response.statusText);
                 }
 
-                dispatch(arcticleHasErrored(false));
+                // dispatch(arcticleHasErrored(false));
 
                 return response;
             })
             .then((response) => response.json())
             .then(() => dispatch(updateArticlePost(data)))
-            .catch(() => dispatch(arcticleHasErrored(true)));
+            // .catch(() => dispatch(arcticleHasErrored(true)));
     };
 }

@@ -6,7 +6,7 @@ import i18next from "i18next";
 class ConnectedChangeForm extends Component {
 
   constructor() {
-      super();
+    super();
       this.state = {
       title: "",
       message: false,
@@ -23,7 +23,6 @@ class ConnectedChangeForm extends Component {
     event.preventDefault()
     const { id } = this.props
     const { title } = this.state;
-    console.log(this.props)
     if(title) {
         this.props.changeArticle({ title, id });
         this.props.updateData(this.state.name)

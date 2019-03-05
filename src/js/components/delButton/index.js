@@ -6,12 +6,19 @@ import { withRouter } from 'react-router-dom';
 
 
 function mapDispatchToProps(dispatch) {
-    return {
-      delArticle: article => dispatch(delArticle(article)),
-    };
-  }
+  return {
+    delArticle: article => dispatch(delArticle(article)),
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    loading: state,
+      hasDeleted: state.arcticleIsDeleted,
+  };
+}
   
-const Button = connect(null, mapDispatchToProps)(DelButton);
+const Button = connect(mapStateToProps, mapDispatchToProps)(DelButton);
 
 
 export default withRouter(Button)
