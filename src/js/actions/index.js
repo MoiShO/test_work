@@ -1,79 +1,77 @@
 import {
-    ARTICLE_HAS_ERRORED,
-    ARTICLE_FETCH_DATA_SUCCESS,
-    ADD_ARTICLE,
-    DEL_ARTICLE,
-    ARTICLE_IS_LOADING,
-    UPDATE_ARTICLE,
-    CHANGE_LANG,
-    ARTICLE_IS_DELETED,
+  ARTICLE_HAS_ERRORED,
+  ARTICLE_FETCH_DATA_SUCCESS,
+  ADD_ARTICLE,
+  DEL_ARTICLE,
+  ARTICLE_IS_LOADING,
+  UPDATE_ARTICLE,
+  CHANGE_LANG,
+  ARTICLE_IS_DELETED,
 } from "../constants/action-types.js";
 
 let load = false
 
 export function arcticleHasErrored(bool) {
-    return { type: ARTICLE_HAS_ERRORED, hasErrored: bool };
+  return { type: ARTICLE_HAS_ERRORED, hasErrored: bool };
 }
 
 export function arcticleIsLoading(bool) {
-    return { type: ARTICLE_IS_LOADING, isLoading: bool };
+  return { type: ARTICLE_IS_LOADING, isLoading: bool };
 }
 
 export function arcticleFetchDataSuccess(items) {
-    return { type: ARTICLE_FETCH_DATA_SUCCESS, items };
+  return { type: ARTICLE_FETCH_DATA_SUCCESS, items };
 }
 
 export function addArticlePost(items) {
-    return { type: ADD_ARTICLE, items }
+  return { type: ADD_ARTICLE, items }
 }
 
 export function delArticlePost(items) {
-    return { type: DEL_ARTICLE, items }
+  return { type: DEL_ARTICLE, items }
 }
 
 export function updateArticlePost(items) {
-    return { type: UPDATE_ARTICLE, items }
+  return { type: UPDATE_ARTICLE, items }
 }
 
 export function changeLanguage(lang) {
-    return { type: CHANGE_LANG, lang }
+  return { type: CHANGE_LANG, lang }
 }
 
 export function arcticleIsDeleted(items) {
-    console.log(items);
-    return { type: ARTICLE_IS_DELETED, isDeleted: items };
+  return { type: ARTICLE_IS_DELETED, isDeleted: items };
 }
 
 export function articleFetchData() {
-        return (dispatch) => {
-            if(load === false) {
 
-                load = true;
+  return (dispatch) => {
+    if(load === false) {
 
-                dispatch(arcticleIsLoading(true));
+      load = true;
+
+      dispatch(arcticleIsLoading(true));
                 
-                const url = 'http://private-9aad-note10.apiary-mock.com/notes'
+      const url = 'http://private-9aad-note10.apiary-mock.com/notes'
 
-                fetch(url)
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw Error(response.statusText);
-                        }
+      return fetch(url).then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
                         
-                        dispatch(arcticleIsLoading(false));
-                        dispatch(arcticleHasErrored(false));
+        dispatch(arcticleIsLoading(false));
+        dispatch(arcticleHasErrored(false));
 
-                        return response;
-                    })
-                    .then((response) => response.json())
-                    .then((items) => dispatch(arcticleFetchDataSuccess(items)))
-                    .catch(() => dispatch(arcticleHasErrored(true)));
-            } 
-            else {
-                dispatch(arcticleIsLoading(false))
-            }
-    }
-    
+        return response;
+      })
+      .then((response) => response.json())
+      .then((items) => dispatch(arcticleFetchDataSuccess(items)))
+      .catch(() => dispatch(arcticleHasErrored(true)));
+      } 
+      else {
+        dispatch(arcticleIsLoading(false))
+      }
+    } 
 }
 
 export function addArticle(data) {

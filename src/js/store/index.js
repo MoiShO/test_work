@@ -8,6 +8,7 @@ export default function configureStore(initialState) {
     return createStore(
         rootReducer,
         initialState,
+        // applyMiddleware(thunk)
         composeEnhancer(applyMiddleware(thunk)),
     );
 }
