@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import ChangeForm from '../changeForm/index'
-import i18next from "i18next";
+import i18next from 'i18next'
 
 class ButtonDetails extends Component {
 

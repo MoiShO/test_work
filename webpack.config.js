@@ -1,15 +1,16 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {  resolve } = require('path')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { resolve } = require('path')
 
 module.exports = {
-  entry: { main: './src/index.js'},
-  devtool: 'eval-source-map',
+  entry: {
+    main: './src/index.js'
+  },
+  devtool: 'cheap-source-map',
   output: {
     path: resolve(__dirname, 'dist'),
-    filename: './js/index.js',
-    // publicPath: "./"
+    filename: './js/index.js'
   },
   module: {
     rules: [
@@ -17,14 +18,14 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        },
+          loader: 'babel-loader'
+        }
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader",
+            loader: 'html-loader'
           }
         ]
       },
@@ -45,11 +46,11 @@ module.exports = {
             loader: 'image-webpack-loader',
             options: {
               bypassOnDebug: true, // webpack@1.x
-              disable: true, // webpack@2.x and newer
-            },
-          },
-        ],
-      }    
+              disable: true // webpack@2.x and newer
+            }
+          }
+        ]
+      }
     ]
   },
   devServer: {
@@ -57,10 +58,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new ExtractTextPlugin({filename: './css/style.css'}),
+    new ExtractTextPlugin({ filename: './css/style.css' }),
     new HtmlWebPackPlugin({
       template: resolve(__dirname, 'src', 'index.html'),
-      filename: "./index.html"
+      filename: './index.html'
     })
   ]
-};
+}

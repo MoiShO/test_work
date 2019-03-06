@@ -1,4 +1,4 @@
-import Switch from "./Switchlanguage.jsx"
-import "./switch-style.css"
+import Switch from './Switchlanguage.jsx'
+import './switch-style.css'
 
 export default Switch

@@ -17,7 +17,7 @@ class ConnectSwich extends Component {
     this.handleSwitchRu = this.handleSwitchRu.bind(this)
   }
 
-  state={
+  state = {
     active: "btn_active",
     defaultClassNameEN: "header btn_switch btn_active en",
     defaultClassNameRU: "header btn_switch ru",
