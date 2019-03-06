@@ -8,3 +8,8 @@
 .App {
     color: #59585e
 }
+.container {
+    min-width:370px;
+    min-height: 1800px;
+    color: #59585e;
+}

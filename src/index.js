@@ -5,6 +5,7 @@ import configureStore from "./js/store/index";
 import App from "./App.jsx";
 import "./js/components/languages/i18n"
 
+// Тестирование ререндера
 
 // if (process.env.NODE_ENV !== 'production') {
 //   const {whyDidYouUpdate} = require('why-did-you-update');

@@ -75,11 +75,12 @@ export function articleFetchData() {
 }
 
 export function addArticle(data) {
+
     return (dispatch) => {
 
         const url = 'https://private-anon-535510ee6b-note10.apiary-mock.com/notes'
 
-        fetch(url,
+        return fetch(url,
             {
                 method: "POST",
                 body: JSON.stringify({title: data.title})
@@ -100,30 +101,26 @@ export function addArticle(data) {
 }
 
 export function delArticle(data) {
+
     return (dispatch) => {
         
-        let set = {delete:true, id: data.id}
-        dispatch(arcticleIsDeleted(set));
+      let set = { delete:true, id: data.id }
 
-        const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`
+      dispatch(arcticleIsDeleted(set));
 
-        fetch(url,
-            {
-                method: "DELETE",
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
+      const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`
 
-                dispatch(arcticleIsDeleted(false));
+      return fetch(url, { method: "DELETE" })
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          dispatch(arcticleIsDeleted(false));
+          dispatch(arcticleHasErrored(false));
 
-                dispatch(arcticleHasErrored(false));
-
-                return response;
-            })
-            .then(() => dispatch(delArticlePost(data)))
-            .catch(() => dispatch(arcticleHasErrored(true)));
+        })
+        .then(() =>dispatch(delArticlePost(data)))
+        .catch(() => {dispatch(arcticleHasErrored(true))})
     };
 }
 
@@ -132,7 +129,7 @@ export function changeArticle(data) {
         
         const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`
 
-        fetch(url,
+        return fetch(url,
             {
                 method: "PUT",
                 body: JSON.stringify({title: data.title})
@@ -141,13 +138,10 @@ export function changeArticle(data) {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-
-                // dispatch(arcticleHasErrored(false));
-
+                
                 return response;
             })
-            .then((response) => response.json())
             .then(() => dispatch(updateArticlePost(data)))
-            // .catch(() => dispatch(arcticleHasErrored(true)));
+            .catch(() => dispatch(arcticleHasErrored(true)));
     };
 }

@@ -1,7 +1,16 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const { join, resolve } = require('path')
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const {  resolve } = require('path')
 
 module.exports = {
+  entry: { main: './src/index.js'},
+  devtool: 'eval-source-map',
+  output: {
+    path: resolve(__dirname, 'dist'),
+    filename: './js/index.js',
+    // publicPath: "./"
+  },
   module: {
     rules: [
       {
@@ -15,13 +24,18 @@ module.exports = {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
+            loader: "html-loader",
           }
         ]
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        // use: ["style-loader", "css-loader"]
+        use: ExtractTextPlugin.extract(
+          {
+            fallback: 'style-loader',
+            use: ['css-loader']
+          })
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
@@ -42,6 +56,8 @@ module.exports = {
     port: 9000
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new ExtractTextPlugin({filename: './css/style.css'}),
     new HtmlWebPackPlugin({
       template: resolve(__dirname, 'src', 'index.html'),
       filename: "./index.html"
