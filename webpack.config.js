@@ -5,13 +5,23 @@ const { resolve } = require('path')
 
 module.exports = {
   entry: {
-    main: './src/index.js'
+    main: ["babel-polyfill", './src/index.js'],
+    // entry: ["babel-polyfill", "./app/js"]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json', '.jsx'],
+    alias: {
+      '~': resolve('src/')
+    },
+    // https://github.com/andreypopp/autobind-decorator#es5-and-uglify-users
+    mainFields: ['main'],
   },
   devtool: 'cheap-source-map',
   output: {
     path: resolve(__dirname, 'dist'),
     filename: './js/index.js'
   },
+  
   module: {
     rules: [
       {
@@ -50,6 +60,11 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['babel-loader', 'eslint-loader']
       }
     ]
   },

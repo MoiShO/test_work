@@ -1,10 +1,18 @@
-import React from 'react'
-import Button from '../delButton/index'
-import Preloder from '../../../preloader/25.gif'
+import React from 'react';
+import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
+import {withRouter} from 'react-router'
+import Button from '../delButton/index';
+import Preloder from '../../../preloader/25.gif';
+import stores from '../../store';
 
+@withRouter
+@inject('listStore', 'formStore', 'delButtonStore', 'changeFormStore')
+@observer
 class ItemList extends React.Component {
+
   componentDidMount () {
-    this.props.fetchData()
+    const { listStore } =  this.props
+    listStore.allNotes()
   }
 
   defaultClass (data) {
@@ -20,33 +28,72 @@ class ItemList extends React.Component {
   }
 
   render () {
-    if (this.props.hasErrored) {
-      return <p>Sorry! There was an error loading the items</p>
+    const {listStore , formStore, delButtonStore, changeFormStore} = this.props
+
+    if (listStore.arcticleHasErrored) {
+      return <p className="error">Sorry! There was an error loading the items, try later please.</p>
     }
 
-    if (this.props.isLoading) {
+    if (listStore.arcticleIsLoading) {
       return <img src={Preloder} alt="loading..." />
+    }
+
+    const title = (item) =>{
+      return(
+        <>
+          {Number(item.id) === (Number(delButtonStore.noteIsDeleted.id) || Number(changeFormStore.change.id)) ?
+            <img src={Preloder} alt="loading..." /> : item.title
+          }
+        </>
+      )
+    }
+
+    const button = (item) =>{ 
+      return(
+        <>
+          {Number(item.id) === Number(delButtonStore.noteIsDeleted.id) ? null :
+          (
+            <>
+              <hr className="notes_list separator" />
+              <Button
+                title={item.title}
+                id={item.id}
+              />
+            </>
+          )
+          }
+        </>
+      )
     }
 
     return (
       <div>
         <ul className="notes_list">
-          {this.props.items.map((item) => (
+          {listStore.list.map((item) => (
             <li key={item.id} className="notes_list note">
-              {Number(item.id) === Number(this.props.isDeleted.id) ? <img src={Preloder} alt="loading..." /> : item.title}
-              <hr className="notes_list separator" />
-
-              {Number(item.id) === Number(this.props.isDeleted.id) ? null : <Button
-                title={item.title}
-                id={item.id}>
-              </Button>
-              }
-            </li>
+              {title(item)}
+              {button(item)}
+            </li> 
           ))}
+          {formStore.arcticleCreateLoading ? <img src={Preloder} alt="loading..." /> : null}
         </ul>
       </div>
     )
   }
+}
+
+ItemList.defaultProps = {
+  delButtonStore: stores.delButtonStore,
+  listStore: stores.listStore,
+  formStore: stores.formStore,
+  changeFormStore: stores.changeFormStore,
+};
+
+ItemList.propTypes = {
+  delButtonStore:  mobxPropTypes.objectOrObservableObject,
+  listStore: mobxPropTypes.objectOrObservableObject,
+  formStore: mobxPropTypes.objectOrObservableObject,
+  changeFormStore: mobxPropTypes.objectOrObservableObject,
 }
 
 export default ItemList

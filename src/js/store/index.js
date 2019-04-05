@@ -1,17 +1,22 @@
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import rootReducer from '../reducers/index'
+import {RouterStore} from 'mobx-react-router';
 
-// инициализация devtools
-// composeEnhancer(applyMiddleware(thunk)),
+import ButtonDetailsStore from './buttonDetailsStore';
+import ChangeFormStore from './changeFormStore';
+import DelButtonStore from './delButtonStore';
+import FormStore from './FormStore';
+import ListStore from './listStore';
+import SwitchLanguageStore from './switchLanguagestore';
 
-// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const routingStore = new RouterStore();
 
-export default function configureStore (initialState) {
-  return createStore(
-    rootReducer,
-    initialState,
-    applyMiddleware(thunk)
-    // composeEnhancer(applyMiddleware(thunk)),
-  )
+const stores = {
+  routing: routingStore,
+  buttonDetailsStore: new ButtonDetailsStore(),
+  changeFormStore: new ChangeFormStore(),
+  delButtonStore: new DelButtonStore(),
+  formStore: new FormStore(),
+  listStore: new ListStore(),
+  switchLanguageStore: new SwitchLanguageStore(),
 }
+
+export default stores

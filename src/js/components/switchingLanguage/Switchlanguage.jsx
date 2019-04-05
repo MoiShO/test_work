@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import i18next from "i18next";
-import { changeLanguage } from "../../actions/index";
-import { connect } from "react-redux";
+import { inject } from "mobx-react";
 
-function mapDispatchToProps(dispatch) {
-  return {
-    changeLanguage: items => dispatch(changeLanguage(items))
-  };
-}
-
+@inject('switchLanguageStore')
 class ConnectSwich extends Component {
 
   constructor(props){
@@ -39,14 +33,14 @@ class ConnectSwich extends Component {
   }
 
   handleSwitchEn = () => {
-    this.props.changeLanguage('en')
+    this.props.switchLanguageStore.changeLanguage('en')
     this.setLanguage('en')
     this.setState( { defaultClassNameRU: `header btn_switch ru` } )
     this.setState( { defaultClassNameEN: `header btn_switch  ${this.state.active} en` } )
   }
 
   handleSwitchRu = () => {
-    this.props.changeLanguage('ru')
+    this.props.switchLanguageStore.changeLanguage('ru')
     this.setLanguage('ru')
     this.setState( { defaultClassNameRU: `header btn_switch ${this.state.active} ru` } )
     this.setState( { defaultClassNameEN: `header btn_switch en` } )
@@ -63,6 +57,4 @@ class ConnectSwich extends Component {
   }
 }
 
-const Switch = connect(null, mapDispatchToProps)(ConnectSwich);
-
-export default Switch
+export default ConnectSwich

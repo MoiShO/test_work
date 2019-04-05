@@ -1,7 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import React, { Component } from 'react'
-import Alert from '../alert/Alert.jsx'
-import i18next from 'i18next'
+import i18next from 'i18next';
+import { inject, PropTypes as mobxPropTypes  } from 'mobx-react';
+import PropTypes from 'prop-types';
+import Alert from '../alert/Alert';
+import stores from '../../store';
 
+@inject('listStore', 'changeFormStore')
 class ConnectedChangeForm extends Component {
   constructor () {
     super()
@@ -17,23 +22,25 @@ class ConnectedChangeForm extends Component {
     this.setState({ [event.target.id]: event.target.value })
   }
 
-  handleSubmit (event) {
+  async handleSubmit (event) {
     event.preventDefault()
-    const { id } = this.props
+
+    const { id, changeFormStore, listStore, updateShowForm } = this.props
     const { title } = this.state
     if (title) {
-      this.props.changeArticle({ title, id })
-      this.props.updateData(this.state.name)
+      updateShowForm()
+      await changeFormStore.changeArticle({ title, id })
+      listStore.changeArticle({ title, id })
     } else {
       this.setState({ message: true })
     }
   }
 
   render () {
-    const { title } = this.state
+    const { title, message } = this.state
     return (
       <form onSubmit={this.handleSubmit}>
-        { this.state.message ? <Alert message={i18next.t('alert')}/> : null}
+        { message ? <Alert message={i18next.t('alert')} /> : null}
         <div className="form-group">
           <label htmlFor="title">{i18next.t('title')}</label>
           <input
@@ -50,6 +57,23 @@ class ConnectedChangeForm extends Component {
       </form>
     )
   }
+}
+
+ConnectedChangeForm.defaultProps = {
+  id: '',
+  changeFormStore: stores.changeFormStore,
+  listStore: stores.listStore,
+  updateShowForm: (() => (undefined)),
+};
+
+ConnectedChangeForm.propTypes = {
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  changeFormStore:  mobxPropTypes.objectOrObservableObject,
+  listStore: mobxPropTypes.objectOrObservableObject,
+  updateShowForm: PropTypes.func,
 }
 
 export default ConnectedChangeForm

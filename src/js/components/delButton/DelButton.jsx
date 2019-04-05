@@ -1,59 +1,74 @@
 import React, { Component } from "react";
-import ChangeForm from '../changeForm/index'
-import i18next from "i18next";
+import i18next from 'i18next';
+import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
+import PropTypes from 'prop-types';
+import ChangeForm from '../changeForm/index';
+import stores from '../../store';
 
-
+@inject('listStore', 'delButtonStore', 'routing')
+@observer
 class DelButton extends Component {
 
   constructor (props){
     super(props);
 
+    this.state = {
+      showForm: false,
+    }
+
     this.handleDel = this.handleDel.bind(this)
     this.routeChange = this.routeChange.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleShowForm = this.handleShowForm.bind(this)
   }
 
-  state = {
-    showForm: false,
+  async handleDel() {
+    const { id, delButtonStore, listStore } = this.props;
+    await delButtonStore.delArticle({ id });
+    listStore.delListNote({ id })
   }
 
-  handleDel() {
-    const { id } = this.props;
-    this.props.delArticle({ id });
+  handleShowForm() {
+    const { showForm } = this.state;
+    this.setState({showForm : !showForm})
+
   }
 
-  routeChange() {
-    const { id } = this.props;
+  routeChange() {    
+    const { id, routing } = this.props;
     let path = `${id}`;
-    return this.props.history.push(path);
+    return routing.history.push(path);
   }
 
-  handleChange() {
-    const showForm = this.state.showForm;
-    this.setState({ showForm: !showForm })
-  }
-
-  updateData = (value) => {
-    this.setState({ showForm: value })
-  }
-  
   render() {
-    const{ del } = this.props.hasDeleted
+    const { showForm } = this.state
+    const { id } = this.props
     return (
-        <div className="note btn_all_change col-sm-12">
-          <button className="note btn_delete btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
-          <button className="note btn_show_detail btn btn-success btn-sm" onClick={this.routeChange}>{i18next.t('btn-show-detail')}</button>
-          <button className="note btn_change btn btn-success btn-sm" onClick={this.handleChange}>{i18next.t('btn-change')}</button>
-          {this.state.showForm ? 
-          <ChangeForm 
-            updateData={this.updateData}
-            id = {this.props.id}
-            /> : null
-          }
-        </div>
+      <div className="note btn_all_change col-sm-12">
+        <button type="button" className="note btn_delete btn btn-success btn-sm" onClick={this.handleDel}>{i18next.t('btn-delete')}</button>
+        <button type="button" className="note btn_show_detail btn btn-success btn-sm" onClick={this.routeChange}>{i18next.t('btn-show-detail')}</button>
+        <button type="button" className="note btn_change btn btn-success btn-sm" onClick={this.handleShowForm}>{i18next.t('btn-change')}</button>
+        {showForm ? <ChangeForm id={id} updateShowForm={this.handleShowForm} /> : null
+        }
+      </div>
     );
   }
 }
 
+DelButton.defaultProps = {
+  id: '',
+  delButtonStore: stores.delButtonStore,
+  listStore: stores.listStore,
+  routing: stores.routing,
+};
+
+DelButton.propTypes = {
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  delButtonStore:  mobxPropTypes.objectOrObservableObject,
+  listStore: mobxPropTypes.objectOrObservableObject,
+  routing: mobxPropTypes.objectOrObservableObject,
+}
 
 export default DelButton;

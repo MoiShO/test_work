@@ -1,20 +1,4 @@
-import { connect } from 'react-redux'
-import { delArticle } from '../../actions/index'
-import { withRouter } from 'react-router-dom'
-import ButtonDetails from './ButtonDeatails.jsx'
+import { withRouter } from 'react-router-dom';
+import ButtonDetails from './ButtonDeatails'
 
-function mapDispatchToProps (dispatch) {
-  return {
-    delArticle: article => dispatch(delArticle(article))
-  }
-}
-const mapStateToProps = state => {
-  return {
-    items: state.items,
-    hasDeleted: state.arcticleIsDeleted
-  }
-}
-
-const Button = connect(mapStateToProps, mapDispatchToProps)(ButtonDetails)
-
-export default withRouter(Button)
+export default withRouter(ButtonDetails)

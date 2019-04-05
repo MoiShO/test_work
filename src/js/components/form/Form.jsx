@@ -1,39 +1,49 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import React, { Component } from 'react'
-import Alert from '../alert/index'
 import i18next from 'i18next'
+import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
+import Alert from '../alert/index';
+import stores from '../../store/index'
 
+@inject('formStore', 'listStore')
+@observer
 class ConnectedForm extends Component {
-  constructor () {
-    super()
+
+  constructor(props){
+    super(props);
+
     this.state = {
       title: '',
-      message: false
+      message: false,
     }
+
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange (event) {
-    this.setState({ [event.target.id]: event.target.value })
+    const title = event.target.value;
+    this.setState({ title: title })
   }
 
-  handleSubmit (event) {
+  async handleSubmit (event) {
     event.preventDefault()
+    const { formStore, listStore } = this.props;
     const { title } = this.state
     if (title) {
-      this.props.addArticle({ title })
       this.setState({ title: '' })
-      this.setState({ message: false })
+      await formStore.addArticle({ title })
+      listStore.addListNewNote(formStore.newList)
     } else {
       this.setState({ message: true })
     }
   }
 
   render () {
-    const { title } = this.state
+    const { title, message } = this.state
     return (
       <form className="form" onSubmit={this.handleSubmit}>
-        { this.state.message ? <Alert message={i18next.t('alert')}/> : null
+        { message ? <Alert message={i18next.t('alert')} /> : null
         }
         <div className="form form_input form-group">
           <label htmlFor="title">{i18next.t('title')}</label>
@@ -51,6 +61,16 @@ class ConnectedForm extends Component {
       </form>
     )
   }
+}
+
+ConnectedForm.defaultProps = {
+  formStore: stores.formStore,
+  listStore: stores.listStore,
+};
+
+ConnectedForm.propTypes = {
+  formStore:  mobxPropTypes.objectOrObservableObject,
+  listStore: mobxPropTypes.objectOrObservableObject,
 }
 
 export default ConnectedForm
