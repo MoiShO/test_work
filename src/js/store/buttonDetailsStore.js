@@ -1,5 +1,6 @@
 import { observable, action, computed} from 'mobx';
 import listStore from './listStore';
+import api from './api';
 
 export default class ButtonDetailsStore {
   @observable DelButtonStoreErrored = false;
@@ -27,9 +28,10 @@ export default class ButtonDetailsStore {
   
     this.noteIsDeleted = set;
   
-    const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`;
+    // const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`;
+    const url = `${api.delNoteById.endPoint}${data.id}`
   
-    return fetch(url, { method: 'DELETE' })
+    return fetch(url, { method: api.delNoteById.method })
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);

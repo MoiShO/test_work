@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
 import {withRouter} from 'react-router'
@@ -10,9 +11,23 @@ import stores from '../../store';
 @observer
 class ItemList extends React.Component {
 
+  state = {
+    how_many: 10,
+  }
+
   componentDidMount () {
-    const { listStore } =  this.props
-    listStore.allNotes()
+    const { listStore } =  this.props;
+    listStore.allNotes();
+  }
+
+  HowMay = (event) => {
+    this.setState({ how_many: event.target.value });
+  }
+
+  randomData = () => {
+    const { listStore } = this.props;
+    const { how_many } = this.state;
+    listStore.randomNotes({ num: how_many})
   }
 
   defaultClass (data) {
@@ -66,15 +81,31 @@ class ItemList extends React.Component {
       )
     }
 
+    const randomaizer = () =>{
+      return(
+        <div className="className">
+          <p>The list is empty, show random data?</p>
+          <button
+            type="button"
+            className="note btn_show_detail btn btn-success btn-sm"
+            onClick={this.randomData}
+          >
+            O_O
+          </button>
+          <input placeholder=' How much' onChange={this.HowMay} />
+        </div>
+      )
+    }
+
     return (
       <div>
         <ul className="notes_list">
-          {listStore.list.map((item) => (
+          {Array.from(listStore.list).length > 0 ? listStore.list.map((item) => (
             <li key={item.id} className="notes_list note">
               {title(item)}
               {button(item)}
             </li> 
-          ))}
+          )) : randomaizer()}
           {formStore.arcticleCreateLoading ? <img src={Preloder} alt="loading..." /> : null}
         </ul>
       </div>

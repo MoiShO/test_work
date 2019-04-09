@@ -1,4 +1,5 @@
 import { observable, action} from 'mobx';
+import api from './api';
 
 export default class FormStore {
   @observable load = false;
@@ -35,14 +36,16 @@ export default class FormStore {
 
   @action.bound
   async addArticle (data) {
-      const url = 'https://private-anon-535510ee6b-note10.apiary-mock.com/notes'
+      // const url = 'https://private-anon-535510ee6b-note10.apiary-mock.com/notes'
+      const url = api.addNote.endPoint
+      
 
       this.handleChangeMessage(false)
       this.arcticleCreateLoading = true
   
       return fetch(url,
         {
-          method: 'POST',
+          method: api.addNote.method,
           body: JSON.stringify({ title: data.title })
         })
         .then((response) => {

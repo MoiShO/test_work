@@ -1,6 +1,7 @@
 import { observable, action, computed} from 'mobx';
 // import PropTypes from 'prop-types';
 import listStore from './listStore';
+import api from './api';
 
 export default class DelButtonStore {
   @observable DelButtonStoreErrored = false;
@@ -28,9 +29,9 @@ export default class DelButtonStore {
   
     this.noteIsDeleted = set;
   
-    const url = `https://private-anon-535510ee6b-note10.apiary-mock.com/notes/${data.id}`;
+    const url =  `${api.delNoteById.endPoint}${data.id}`
   
-    return fetch(url, { method: 'DELETE' })
+    return fetch(url, { method: api.delNoteById.method})
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -44,14 +45,3 @@ export default class DelButtonStore {
   }
 }
 
-// DelButtonStore.defaultProps = {
-//   noteIsDeleted: {},
-//   show: false,
-//   DelButtonStoreErrored: false,
-// }
-
-// DelButtonStore.PropTypes = {
-//   noteIsDeleted: PropTypes.object,
-//   show: PropTypes.bool,
-//   DelButtonStoreErrored: PropTypes.bool,
-// }

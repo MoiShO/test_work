@@ -1,4 +1,5 @@
 import { observable, action} from 'mobx';
+import api from './api';
 
 export default class ListStore {
   @observable load = false;
@@ -13,12 +14,12 @@ export default class ListStore {
 
   @action.bound
   addListNewNote(data) {
-    this.list = observable.array(this.list.concat(data), { deep: false })
+    this.list = observable.array(this.list.concat(data[data.length-1]), { deep: false })
   }
 
   @action.bound
   delListNote(data) {
-    this.list.replace(this.list.filter((el) => el.id !== Number(data.id)))
+    this.list.replace(this.list.filter((el) => Number(el.id) !== Number(data.id)))
   }
 
   @action.bound
@@ -32,13 +33,38 @@ export default class ListStore {
       })
     )
   }
+
   @action.bound
   allNotes() {
     if(this.load === false) {
       this.arcticleIsLoading = true
       this.load = true;
 
-      const url = 'http://private-9aad-note10.apiary-mock.com/notes'
+      // const url = 'http://private-9aad-note10.apiary-mock.com/notes'
+      const url = `${api.getNotes.endPoint}`
+  
+      return fetch(url).then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        this.arcticleIsLoading = false
+        this.arcticleHasErrored = false
+  
+        return response
+      })
+      .then((response) => response.json())
+      .then((items)=> this.list = items)
+      .catch(() => this.arcticleHasErrored = true)
+    }
+  }
+
+  @action.bound
+  randomNotes(data) {
+      this.arcticleIsLoading = true
+      this.load = true;
+
+      // const url = 'http://private-9aad-note10.apiary-mock.com/notes'
+      const url = `${api.getNotes.endPoint}/random/${data.num}`
   
       return fetch(url).then((response) => {
         if (!response.ok) {
@@ -52,6 +78,5 @@ export default class ListStore {
       .then((response) => response.json())
       .then((items)=> this.list = observable.array(this.list.concat(items), { deep: false }))
       .catch(() => this.arcticleHasErrored = true)
-    }
   }
 }
