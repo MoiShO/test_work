@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import React, { Component } from 'react'
-import i18next from 'i18next'
+import React, { Component } from 'react';
+import i18next from 'i18next';
 import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
 import Alert from '../alert/index';
-import stores from '../../store/index'
+import stores from '../../store/index';
 
 @inject('formStore', 'listStore')
 @observer

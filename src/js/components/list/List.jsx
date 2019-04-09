@@ -2,6 +2,8 @@
 import React from 'react';
 import { observer, inject, PropTypes as mobxPropTypes } from 'mobx-react';
 import {withRouter} from 'react-router'
+import i18next from 'i18next';
+
 import Button from '../delButton/index';
 import Preloder from '../../../preloader/25.gif';
 import stores from '../../store';
@@ -83,8 +85,8 @@ class ItemList extends React.Component {
 
     const randomaizer = () =>{
       return(
-        <div className="className">
-          <p>The list is empty, show random data?</p>
+        <div className="data">
+          <p>{i18next.t('list_empty')}</p>
           <button
             type="button"
             className="note btn_show_detail btn btn-success btn-sm"
@@ -92,7 +94,12 @@ class ItemList extends React.Component {
           >
             O_O
           </button>
-          <input placeholder=' How much' onChange={this.HowMay} />
+          <input
+            type="text"
+            className="form-control input_inline"
+            placeholder=' How much'
+            onChange={this.HowMay} 
+          />
         </div>
       )
     }

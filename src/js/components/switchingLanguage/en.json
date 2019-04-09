@@ -11,6 +11,7 @@
         "btn-delete": "DELETE",
         "nav-home": "HOME",
         "alert": "Fill in the title",
+        "list_empty": "The list is empty, show random data?",
         "english": "en",
         "russian": "ru"
       }
